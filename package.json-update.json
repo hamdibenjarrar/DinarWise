@@ -1,0 +1,6 @@
+{
+    "scripts": {
+      "build": "next build && rm -f .next/server/middleware.js"
+    }
+  }
+  

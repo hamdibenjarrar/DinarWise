@@ -1,6 +1,6 @@
 {
     "scripts": {
-      "build": "next build && rm -f .next/server/middleware.js"
+      "start": "NODE_ENV=production node server.js"
     }
   }
   

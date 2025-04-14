@@ -4,7 +4,7 @@ const nextConfig = {
   images: {
     domains: ["lh3.googleusercontent.com", "avatars.githubusercontent.com"],
   },
-  // Add this section for your custom domain
+  // Add basic security headers
   async headers() {
     return [
       {

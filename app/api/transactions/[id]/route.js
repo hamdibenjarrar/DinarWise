@@ -20,50 +20,7 @@ export async function GET(request, { params }) {
     return NextResponse.json({ transaction })
   } catch (error) {
     console.error("Error fetching transaction:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
-  }
-}
-
-// UPDATE a transaction
-export async function PUT(request, { params }) {
-  try {
-    const { id } = params
-    const { type, amount, description, category, date } = await request.json()
-
-    // Validate input
-    if (!type || !amount || !description || !category || !date) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
-    }
-
-    const client = await clientPromise
-    const db = client.db("dinarwise")
-    const transactionsCollection = db.collection("transactions")
-
-    const result = await transactionsCollection.updateOne(
-      { _id: new ObjectId(id) },
-      {
-        $set: {
-          type,
-          amount: Number(amount),
-          description,
-          category,
-          date: new Date(date),
-          updatedAt: new Date(),
-        },
-      },
-    )
-
-    if (result.matchedCount === 0) {
-      return NextResponse.json({ error: "Transaction not found" }, { status: 404 })
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: "Transaction updated successfully",
-    })
-  } catch (error) {
-    console.error("Error updating transaction:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    return NextResponse.json({ error: "Internal server error: " + error.message }, { status: 500 })
   }
 }
 
@@ -88,7 +45,6 @@ export async function DELETE(request, { params }) {
     })
   } catch (error) {
     console.error("Error deleting transaction:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    return NextResponse.json({ error: "Internal server error: " + error.message }, { status: 500 })
   }
 }
-
